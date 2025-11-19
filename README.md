@@ -1,6 +1,4 @@
 # Exercice-informatique
-Mes Premiers Exercices en Programmation
-
 Ce dépôt contient mes premiers exercices et petits projets pour apprendre la programmation 
 avant d’entrer en BUT Informatique.
 

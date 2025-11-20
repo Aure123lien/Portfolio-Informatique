@@ -19,24 +19,48 @@ def division(a, b):
     #Retourne le résultat de la division
     return a / b
 
+# Le programme
 
-#Fonction principale du programme
-
+# La fonction main() contient toute la logique du programme
 def main():
-    # Message de début de la calculatrice
-    print("Calculatrice avec Python")
+
+    # Le message qui est affiché au lancement du programme
+    print("Calculatrice Python")
     print("Opérations disponibles : +  -  *  /")
-    
-    #Boucle infinie pour permettre plusieurs calculs d'affilée
+
+    # Boucle infinie pour permettre à la personne d’enchaîner plusieurs calculs sans relancer le programme
     while True:
+
         try:
-            #Demande le premier nombre à la personne
             a = float(input("Entrez le premier nombre : "))
-            #Demande le second nombre
             b = float(input("Entrez le second nombre : "))
         except ValueError:
-            #Message d'erreur si la personne ne met pas un nombre
-            print("Veuillez entrer uniquement des nombres.")
-            continue  # Retour à la boucle pour recommencer
+            print("Veuillez entrer uniquement des nombres valides.")
+            continue
+
+        # On demande à la personne de choisir une opération qu'il souhaite effectuer
+        op = input("Entrez l'opération (+, -, *, /) : ")
+
+        if op == "+":
+            result = addition(a, b)
+        elif op == "-":
+            result = soustraction(a, b)
+        elif op == "*":
+            result = multiplication(a, b)
+        elif op == "/":
+            result = division(a, b)
+        else:
+            print("Opération invalide.")
+            continue  # On recommence la boucle.
+
+        print(f"Résultat : {result}")
+
+        choix = input("Voulez-vous faire un autre calcul ? (oui/non) : ").lower()
+
+        if choix != "oui":
+            print("Merci d'avoir utilisé la calculatrice !")
+            break  # Sortie de boucle donc la fin du programme.
+
+
 if __name__ == "__main__":
     main()

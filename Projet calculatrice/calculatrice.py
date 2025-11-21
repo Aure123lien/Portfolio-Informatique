@@ -15,8 +15,7 @@ def division(a, b):
         return "Erreur : division par zéro impossible."
     return a / b
 
-
-# Fonction principale
+#Fonction principale du programme
 def calculatrice():
     print("Calculatrice Python")
     

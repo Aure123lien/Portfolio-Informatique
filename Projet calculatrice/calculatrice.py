@@ -1,66 +1,57 @@
-#Les fonctions mathématiques
+# Calculatrice simple en Python
 
+# Fonctions pour les opérations
 def addition(a, b):
-    #Retourne la somme des deux nombres
     return a + b
 
 def soustraction(a, b):
-    #Retourne la différence des deux nombres
     return a - b
 
 def multiplication(a, b):
-    #Retourne le produit des deux nombres
     return a * b
 
 def division(a, b):
-    #Vérifie si la personne essaie de diviser par zéro
     if b == 0:
-        return "Erreur : division par zéro"
-    #Retourne le résultat de la division
+        return "Erreur : division par zéro impossible."
     return a / b
 
-# Le programme
 
-# La fonction main() contient toute la logique du programme
-def main():
-
-    # Le message qui est affiché au lancement du programme
+# Fonction principale
+def calculatrice():
     print("Calculatrice Python")
-    print("Opérations disponibles : +  -  *  /")
-
-    # Boucle infinie pour permettre à la personne d’enchaîner plusieurs calculs sans relancer le programme
+    
     while True:
-
+        # Demande des nombres à la personne
         try:
-            a = float(input("Entrez le premier nombre : "))
-            b = float(input("Entrez le second nombre : "))
+            x = float(input("Entrez le premier nombre : "))
+            y = float(input("Entrez le deuxième nombre : "))
         except ValueError:
-            print("Veuillez entrer uniquement des nombres valides.")
+            print("Erreur : veuillez entrer un nombre valide.\n")
             continue
 
-        # On demande à la personne de choisir une opération qu'il souhaite effectuer
-        op = input("Entrez l'opération (+, -, *, /) : ")
+        # Choix de l'opération a utiliser
+        operation = input("Choisissez une opération (+, -, *, /) : ")
 
-        if op == "+":
-            result = addition(a, b)
-        elif op == "-":
-            result = soustraction(a, b)
-        elif op == "*":
-            result = multiplication(a, b)
-        elif op == "/":
-            result = division(a, b)
+        # Calcul selon l'opération que la personne a choisie
+        if operation == "+":
+            resultat = addition(x, y)
+        elif operation == "-":
+            resultat = soustraction(x, y)
+        elif operation == "*":
+            resultat = multiplication(x, y)
+        elif operation == "/":
+            resultat = division(x, y)
         else:
-            print("Opération invalide.")
-            continue  # On recommence la boucle.
+            print("Erreur : opération non reconnue.\n")
+            continue
 
-        print(f"Résultat : {result}")
+        print(f"Résultat : {resultat}")
 
-        choix = input("Voulez-vous faire un autre calcul ? (oui/non) : ").lower()
-
-        if choix != "oui":
+        # Demander si on recommence un autre calcul
+        continuer = input("Voulez-vous faire un autre calcul ? (oui/non) : ").lower()
+        if continuer != "oui":
             print("Merci d'avoir utilisé la calculatrice !")
-            break  # Sortie de boucle donc la fin du programme.
+            break
 
+calculatrice()
 
-if __name__ == "__main__":
-    main()

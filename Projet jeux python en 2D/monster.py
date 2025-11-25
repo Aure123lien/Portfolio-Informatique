@@ -14,7 +14,7 @@ class Monster(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 900 + random.randint(0, 300)
         self.rect.y = 465
-        self.velocity = random.randint(1, 3)
+        self.velocity = random.randint(1, 2)
     # Redimensionner l'image du monstre
         self.image = pygame.transform.scale(self.image, (200, 150))
 

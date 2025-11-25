@@ -6,6 +6,8 @@ from monster import Monster
 class Game:
 
     def __init__(self):
+        # Definir si le jeux a commencer
+        self.is_playing = False
         # générer un joueur
         self.all_players = pygame.sprite.Group()
         self.player = Player(self)
@@ -13,9 +15,45 @@ class Game:
         # groupe de monstre
         self.all_monsters = pygame.sprite.Group()
         self.pressed = {}
+        # spawn initial de monstres
+       
+
+    def start(self):
+        self.is_playing = True
         self.spawn_monster()
         self.spawn_monster()
 
+    def game_over(self):
+        # remettre le jeux à zéro
+        # réinitialiser la vie du personnage
+        # retirer les monstres
+        self.all_monsters = pygame.sprite.Group()
+        self.player.health = self.player.max_health
+        self.is_playing = False
+
+    def update(self, screen):
+        # afficher le joueur
+        screen.blit(self.player.image, self.player.rect)
+
+        # afficher la barre de vie du joueur
+        self.player.update_health_bar(screen)
+
+        # déplacer et afficher les projectiles
+        for projectile in self.player.all_projectiles:
+            projectile.move()
+        self.player.all_projectiles.draw(screen)
+
+        # déplacer et afficher les monstres
+        for monster in self.all_monsters:
+            monster.forward()
+            monster.update_health_bar(screen)
+        self.all_monsters.draw(screen)
+
+        # déplacement du joueur (géré ici pour que le rendu soit cohérent)
+        if self.pressed.get(pygame.K_RIGHT) and self.player.rect.x + self.player.rect.width < screen.get_width():
+            self.player.move_right()
+        elif self.pressed.get(pygame.K_LEFT) and self.player.rect.x > 0:
+            self.player.move_left()
 
     def check_collision(self, sprite, group):
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)

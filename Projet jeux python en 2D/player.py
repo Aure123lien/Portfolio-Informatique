@@ -36,6 +36,8 @@ class Player(pygame.sprite.Sprite):
     def launch_projectile(self):
         # création de la classe projectile
         self.all_projectiles.add(Projectile(self))
+        # jouer le son
+        self.game.sound_manager.play("tir")
 
     def move_right(self):
         if not self.game.check_collision(self, self.game.all_monsters):

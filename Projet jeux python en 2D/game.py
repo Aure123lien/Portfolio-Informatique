@@ -2,6 +2,7 @@ import pygame
 from player import Player
 from monster import Dragon, Monster, Ogre
 from comet_event import CometFallEvent
+from sounds import SoundManager
 
 # créer une seconde classe
 class Game:
@@ -17,8 +18,12 @@ class Game:
         self.comet_event = CometFallEvent(self)
         # groupe de monstre
         self.all_monsters = pygame.sprite.Group()
+        # gerer le son
+        self.sound_manager = SoundManager()
+        # mettre le score a 0
+        self.font = pygame.font.Font("Projet jeux python en 2D/assets/CustomFont.ttf", 25)
+        self.score = 0
         self.pressed = {}
-        # spawn initial de monstres
        
 
     def start(self):
@@ -26,6 +31,9 @@ class Game:
         self.spawn_monster(Ogre)
         self.spawn_monster(Ogre)
         self.spawn_monster(Dragon)
+
+    def add_score(self, points):
+        self.score += points
 
     def game_over(self):
         # remettre le jeux à zéro
@@ -36,8 +44,15 @@ class Game:
         self.player.health = self.player.max_health
         self.comet_event.reset_percent()
         self.is_playing = False
+        self.score = 0
+        # jouer le son
+        self.sound_manager.play("game_over")
 
     def update(self, screen):
+        # afficher le score sur l'ecran
+        score_text = self.font.render(f"Score : {self.score}", 1, (0, 0, 0))
+        screen.blit(score_text, (20, 20))
+
         # afficher le joueur
         screen.blit(self.player.image, self.player.rect)
 

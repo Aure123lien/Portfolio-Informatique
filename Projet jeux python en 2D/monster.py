@@ -14,11 +14,15 @@ class Monster(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 900 + random.randint(0, 300)
         self.rect.y = 465
+        self.loot_amount = 10
         self.name = name
 
     def set_speed(self, speed):
         self.default_speed = speed
         self.velocity = random.randint(1, 2)
+
+    def set_loot_amount(self, amount):
+        self.loot_amount = amount
 
     def damage(self, amount):
         self.health -= amount
@@ -27,6 +31,8 @@ class Monster(pygame.sprite.Sprite):
             self.rect.x = 900 + random.randint(0, 300)
             self.velocity = random.randint(1,self.default_speed)
             self.health = self.max_health
+            # ajouter le score a chaque monstre tuer
+            self.game.add_score(self.loot_amount)
 
             if self.game.comet_event.is_full_loaded():
                 self.game.all_monsters.remove(self)
@@ -48,6 +54,7 @@ class Ogre(Monster):
     def __init__(self, game):
         super().__init__(game, "ogre", "Projet jeux python en 2D/assets/ogre.png", (130, 130))
         self.set_speed(3)
+        self.set_loot_amount(10)
 
 # classe Dragon
 class Dragon(Monster):
@@ -58,3 +65,4 @@ class Dragon(Monster):
         self.attack = 0.8
         self.rect.y = 360
         self.set_speed(1)
+        self.set_loot_amount(50)

@@ -76,6 +76,8 @@ while running:
             if play_button_rect.collidepoint(event.pos):
                 # lancer le jeux
                 game.start()
+                # le son
+                game.sound_manager.play("click")
     # fixer le nombre de FPS
     clock.tick(FPS)
                 

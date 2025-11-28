@@ -33,7 +33,33 @@ game_music_path = MUSIC_GAME_PATH
 # Menu pause
 is_paused = False
 
-# Fenêtre de jeu - Plein écran à la résolution du bureau
+# Fonction pour changer le mode écran
+def set_screen_mode(mode):
+    global screen, SCREEN_WIDTH, SCREEN_HEIGHT, background, bg_width, bg_height, scale, new_width, new_height, bg_x, bg_y
+    # Dimensions pour le mode fenêtre plein écran
+    windowed_width = 1920
+    windowed_height = 1080
+
+    if mode == 0:  # Fenêtre plein écran
+        screen = pygame.display.set_mode((windowed_width, windowed_height), pygame.NOFRAME)
+        SCREEN_WIDTH, SCREEN_HEIGHT = windowed_width, windowed_height
+    elif mode == 1:  # Plein écran
+        screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        SCREEN_WIDTH, SCREEN_HEIGHT = screen.get_size()
+
+    # Recalculer le l'affichage du fond d'ecran
+    background = pygame.image.load(BACKGROUND_PATH).convert()
+    bg_width, bg_height = background.get_size()
+    scale_x = SCREEN_WIDTH / bg_width
+    scale_y = SCREEN_HEIGHT / bg_height
+    scale = min(scale_x, scale_y)
+    new_width = int(bg_width * scale)
+    new_height = int(bg_height * scale)
+    background = pygame.transform.smoothscale(background, (new_width, new_height))
+    bg_x = (SCREEN_WIDTH - new_width) // 2
+    bg_y = (SCREEN_HEIGHT - new_height) // 2
+
+# Sa prend la resolution du bureau
 pygame.display.set_caption("Jeu de tir en 2D")
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 SCREEN_WIDTH, SCREEN_HEIGHT = screen.get_size()
@@ -42,7 +68,7 @@ SCREEN_WIDTH, SCREEN_HEIGHT = screen.get_size()
 game = Game()
 manche_start_time = 0
 
-# Background du jeu
+# Fond d'écran du jeu
 background = pygame.image.load(BACKGROUND_PATH).convert()
 bg_width, bg_height = background.get_size()
 scale_x = SCREEN_WIDTH / bg_width
@@ -54,13 +80,13 @@ background = pygame.transform.smoothscale(background, (new_width, new_height))
 bg_x = (SCREEN_WIDTH - new_width) // 2
 bg_y = (SCREEN_HEIGHT - new_height) // 2
 
-# Volume
+# Volume 
 music_volume = INITIAL_MUSIC_VOLUME
 sound_volume = INITIAL_SOUND_VOLUME
 pygame.mixer.music.set_volume(music_volume)
 game.sound_manager.set_volume(sound_volume)
 
-# Composants d'interface utilisateur (après mise à jour de SCREEN_WIDTH)
+# Toutes les interface afficher
 main_menu = MainMenu(screen, game.best_score)
 level_menu = LevelMenu(screen)
 settings_menu = SettingsMenu(screen)
@@ -76,7 +102,6 @@ show_level_menu = False
 # Début de la boucle principale du jeux
 running = True
 while running:
-    # Blitter le background seulement pendant le jeu, pas dans les menus
     if game.is_playing:
         screen.blit(background, (bg_x, bg_y))
     mouse_pos = pygame.mouse.get_pos()
@@ -135,6 +160,14 @@ while running:
                 settings_menu.dragging_music = True
             if show_settings and settings_menu.sound_slider_rect.collidepoint(event.pos):
                 settings_menu.dragging_sound = True
+            # Gérer les changements de mode écran
+            if show_settings:
+                old_mode = settings_menu.get_fullscreen_mode()
+                settings_menu.handle_mouse_down(event.pos)
+                new_mode = settings_menu.get_fullscreen_mode()
+                if old_mode != new_mode:
+                    set_screen_mode(new_mode)
+                    game.sound_manager.play("click")
             # Fermer la fenêtre réglages
             if show_settings and close_btn.collidepoint(event.pos):
                 show_settings = False

@@ -23,30 +23,53 @@ Ce projet permet de vous montrer ma capacité à concevoir un programme structur
 ## 🧠 Structure du projet
 
 Voici la structure des fichiers principaux du jeu :
-- main.py C'est le Point d'entrée du jeu boucle principale et ou toutes les fonctionnalité (musique, etc)
-- game.py  C'est le fichier de la gestion du jeu global du jeux affichage, collisions et bien d'autre
-- player.py C'est le fichier qui sert a creer et gerer la classe joueur et la personnalisé (Les PV du joueur, l'attaque du joueur, la vitesse des joueurs)
-- projectile.py C'est le fichier qui permet l'envoie des projectiles du joueur et gère ses fonctionnalité
-- monster.py  C'est la Classe des monstres et permet de les modifier et d'en rajouter
-- comet_event.py Il gère l'évenenement rajouter au jeux (j'ai choisis la chute de comète)
-- comet.py  Ce qui représentant une comète seule et les intéractions qu'elle va pouvoir réaliser
-- sounds.py  Gestion et chargement des effets sonores
-- assets/  Ce dossier sert a gerer toutes les Images, sprites, sons, polices, etc qui seront rajouter dans le jeux
+launch_game.py     # C'est le .exe pour demarrer le jeux            
+main.py            # Ou se trouve toutes les boucles principales du jeux
+game.py            # le fichier de la logique du jeu global
+entitée/           # le dossier de la gestion des classes des différentes entités
+events/            # Le dossier de la gestion des événements
+hud/               # Toutes les interfaces, boutons, menu visible dans le jeux
+audio/             # Le dossier pour la gestion des musiques et sons
+configuration/     # Permet plus faciliter pour configurer les autres fichier, je peux placer toutes mes paramètre et les utliser dans un autre fichier
+assets/            # Le dossier ou je vais placer l'intégraliter de mes images et fichier musiques
+README.md          # Permet de vous décrire mon projet
 
-Chaque fichier représente un élément bien séparé du jeux et qui permet donc une clareter, une logique et avec une facilité de gerer les différents élement du jeux
+Chaque fichier représente un élément bien séparé du jeux et qui permet donc une meilleur organisation et une meilleur recherche pour la modification d'un paramètre du jeux ou l'ajout d'une fonctionnaliter
 
 # Installation de mon jeux
 
-1. Installer Pygame :
-   
-   Lancer votre terminal faites :
-   - pip install pygame
+# 2 alternative
+
+# Prérequis pour lancer le jeux
+- Python dans la version 3.6 ou supérieur
+- Pour in staller Pygame il faut ouvrir le terminal et faire cette commadne a l'interieur "pip install pygame" sa vous installera pygame
 
 2. télécharger mon projet :
 
  Sur la page de mon guithub un petit logo vert sera visible "code" cliquez dessus et faites "download ZIP" le fichier se téléchargera avec tous mon projet se téléchargera
 
- ou cloner mon projet 
+ 3.Ensuite 3ème étapes vous allez pouvoir aller dans mon dossier et chercher le fichier qui se nomme "Lancer_Jeu.bat" (double-cliquez dessus) ou "launch_game.py" (double-cliquez ou python launch_game.py)
+
+## Méthodes de lancement détaillées
+
+### 🚀 Méthode la plus simple (Windows)
+**Double-cliquez sur `Lancer_Jeu.bat`** - Le fichier batch vérifie Python et lance le jeu automatiquement !
+
+### 📁 Méthode simple (tous systèmes)
+Double-cliquez sur `launch_game.py` ou exécutez :
+```bash
+python launch_game.py
+```
+
+### 💻 Méthode développeur (terminal)
+```bash
+python -m main.main
+```
+
+### 🛠️ Configuration VS Code
+1. Ouvrez `launch_game.py`
+2. Cliquez sur le bouton "Run" (▶️) en haut à droite
+3. Ou appuyez sur F5
 
 # Les Contrôles
 

@@ -1,0 +1,88 @@
+import pygame
+from ..configuration import *
+
+font_small = pygame.font.Font(None, SMALL_FONT_SIZE)
+
+class SettingsMenu:
+    def __init__(self, screen):
+        self.screen = screen
+        self.music_volume = INITIAL_MUSIC_VOLUME
+        self.sound_volume = INITIAL_SOUND_VOLUME
+
+        # Les barres de volume du son et musiques
+        self.music_bar_rect = pygame.Rect(0, 0, 200, 10)
+        self.music_slider_rect = pygame.Rect(0, 0, 20, 20)
+        self.sound_bar_rect = pygame.Rect(0, 0, 200, 10)
+        self.sound_slider_rect = pygame.Rect(0, 0, 20, 20)
+        self.dragging_music = False
+        self.dragging_sound = False
+
+        # Les polices d'écriture
+        self.font_small = pygame.font.Font(None, SMALL_FONT_SIZE)
+
+    def draw(self):
+        overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
+        overlay.fill((0, 0, 0, 150))
+        self.screen.blit(overlay, (0, 0))
+
+        settings_window = pygame.Rect(
+            (SCREEN_WIDTH - SETTINGS_WINDOW_WIDTH) // 2,
+            (SCREEN_HEIGHT - SETTINGS_WINDOW_HEIGHT) // 2,
+            SETTINGS_WINDOW_WIDTH,
+            SETTINGS_WINDOW_HEIGHT
+        )
+        pygame.draw.rect(self.screen, DARK_GRAY, settings_window, border_radius=12)
+        pygame.draw.rect(self.screen, WHITE, settings_window, 3, border_radius=12)
+
+        margin_x = MUSIC_BAR_MARGIN_X
+        music_bar_y = settings_window.top + MUSIC_BAR_Y
+        sound_bar_y = settings_window.top + SOUND_BAR_Y
+
+        # Barre de musique
+        self.music_bar_rect.topleft = (settings_window.left + margin_x, music_bar_y)
+        self.music_bar_rect.width = settings_window.width - 2 * margin_x
+        self.music_slider_rect.y = self.music_bar_rect.y - 5
+        self.music_slider_rect.x = self.music_bar_rect.x + self.music_volume * self.music_bar_rect.width - 10
+        pygame.draw.rect(self.screen, LIGHT_GRAY, self.music_bar_rect)
+        pygame.draw.rect(self.screen, YELLOW, self.music_slider_rect)
+        self.screen.blit(self.font_small.render("Musique", True, WHITE), (self.music_bar_rect.x, self.music_bar_rect.y - 30))
+
+        # Barre de sons
+        self.sound_bar_rect.topleft = (settings_window.left + margin_x, sound_bar_y)
+        self.sound_bar_rect.width = settings_window.width - 2 * margin_x
+        self.sound_slider_rect.y = self.sound_bar_rect.y - 5
+        self.sound_slider_rect.x = self.sound_bar_rect.x + self.sound_volume * self.sound_bar_rect.width - 10
+        pygame.draw.rect(self.screen, LIGHT_GRAY, self.sound_bar_rect)
+        pygame.draw.rect(self.screen, YELLOW, self.sound_slider_rect)
+        self.screen.blit(self.font_small.render("Sons", True, WHITE), (self.sound_bar_rect.x, self.sound_bar_rect.y - 30))
+
+        # Bouton de fermeture de la fenetre
+        close_btn = pygame.Rect(settings_window.right - 40, settings_window.top + 10, 30, 30)
+        pygame.draw.rect(self.screen, RED, close_btn)
+        pygame.draw.line(self.screen, WHITE, (close_btn.left + 5, close_btn.top + 5), (close_btn.right - 5, close_btn.bottom - 5), 3)
+        pygame.draw.line(self.screen, WHITE, (close_btn.right - 5, close_btn.top + 5), (close_btn.left + 5, close_btn.bottom - 5), 3)
+
+        return close_btn
+
+    def handle_mouse_motion(self, event):
+        if self.dragging_music:
+            rel_x = max(0, min(event.pos[0] - self.music_bar_rect.x, self.music_bar_rect.width))
+            self.music_volume = rel_x / self.music_bar_rect.width
+            self.music_slider_rect.x = self.music_bar_rect.x + rel_x - 10
+        if self.dragging_sound:
+            rel_x = max(0, min(event.pos[0] - self.sound_bar_rect.x, self.sound_bar_rect.width))
+            self.sound_volume = rel_x / self.sound_bar_rect.width
+            self.sound_slider_rect.x = self.sound_bar_rect.x + rel_x - 10
+
+    def handle_mouse_down(self, pos):
+        if self.music_slider_rect.collidepoint(pos):
+            self.dragging_music = True
+        if self.sound_slider_rect.collidepoint(pos):
+            self.dragging_sound = True
+
+    def handle_mouse_up(self):
+        self.dragging_music = False
+        self.dragging_sound = False
+
+    def get_volumes(self):
+        return self.music_volume, self.sound_volume

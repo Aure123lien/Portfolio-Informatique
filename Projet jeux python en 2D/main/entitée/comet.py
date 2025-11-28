@@ -1,16 +1,17 @@
 import pygame
 import random
+from ..configuration import *
 
 # création de ma classe comet
 class Comet(pygame.sprite.Sprite):
 
     def __init__(self, comet_event):
         super().__init__()
-        self.image = pygame.image.load("Projet jeux python en 2D/assets/comet.png")
-        self.image = pygame.transform.scale(self.image, (200, 200))  
+        self.image = pygame.image.load(COMET_IMG_PATH)
+        self.image = pygame.transform.scale(self.image, (200, 200))
         self.rect = self.image.get_rect()
-        self.velocity = random.randint(4, 6) 
-        self.rect.x = random.randint(20, 1900)
+        self.velocity = random.randint(COMET_VELOCITY_MIN, COMET_VELOCITY_MAX)
+        self.rect.x = random.randint(20, SCREEN_WIDTH - 20)
         self.rect.y = -random.randint(0, 800)
         self.comet_event = comet_event
 
@@ -26,7 +27,7 @@ class Comet(pygame.sprite.Sprite):
 
     def fall(self):
         self.rect.y += self.velocity
-        if self.rect.y >= 1080:
+        if self.rect.y >= SCREEN_HEIGHT:
             self.remove()
             if len(self.comet_event.all_comets) == 0:
                 self.comet_event.reset_percent()
@@ -35,4 +36,4 @@ class Comet(pygame.sprite.Sprite):
         if self.comet_event.game.check_collision(self, self.comet_event.game.all_players):
             self.remove()
             # dégat sur le joueur
-            self.comet_event.game.player.damage(20)
+            self.comet_event.game.player.damage(COMET_DAMAGE)

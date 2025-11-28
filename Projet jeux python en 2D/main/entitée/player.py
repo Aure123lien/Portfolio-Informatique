@@ -1,23 +1,25 @@
 import pygame
-from projectile import Projectile
+from .projectile import Projectile
+from ..configuration import *
 
+# création de la classe du joueur, définir tous ses attributs
 class Player(pygame.sprite.Sprite):
-    
+
     def __init__(self, game):
         super().__init__()
         self.game = game
-        self.health = 100
-        self.max_health = 100
-        self.attack = 25
-        self.velocity = 3
+        self.health = PLAYER_MAX_HEALTH
+        self.max_health = PLAYER_MAX_HEALTH
+        self.attack = PLAYER_ATTACK
+        self.velocity = PLAYER_VELOCITY
         self.all_projectiles = pygame.sprite.Group()
-        self.score = 0 
-        self.image = pygame.image.load("Projet jeux python en 2D/assets/Mage.png")
+        self.score = 0
+        self.image = pygame.image.load(PLAYER_IMG_PATH)
         self.image = pygame.transform.scale(self.image, (300, 250))
         self.rect = self.image.get_rect()
         # Position initiale sur le sol
         self.rect.x = 350
-        self.rect.y = 1080 - self.image.get_height() - 130
+        self.rect.y = SCREEN_HEIGHT - self.image.get_height() - 130
 
     def damage(self, amount):
         self.health -= amount
@@ -25,8 +27,8 @@ class Player(pygame.sprite.Sprite):
             self.game.game_over()
 
     def update_health_bar(self, surface):
-        pygame.draw.rect(surface, (94, 90, 90), [self.rect.x + 50, self.rect.y + 30, self.max_health, 5])
-        pygame.draw.rect(surface, (255, 41, 0), [self.rect.x + 50, self.rect.y + 30, self.health, 5])
+        pygame.draw.rect(surface, GRAY, [self.rect.x + 50, self.rect.y + 30, self.max_health, 5])
+        pygame.draw.rect(surface, RED, [self.rect.x + 50, self.rect.y + 30, self.health, 5])
 
     def launch_projectile(self):
         self.all_projectiles.add(Projectile(self))
@@ -41,10 +43,3 @@ class Player(pygame.sprite.Sprite):
 
     def add_score(self, points):
         self.score += points
-
-
-
-
-
-
-

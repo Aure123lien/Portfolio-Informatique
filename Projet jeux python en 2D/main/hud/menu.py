@@ -50,24 +50,26 @@ class MainMenu:
         self.settings_img_hover = pygame.transform.scale(self.settings_img_original, (int(SCREEN_WIDTH * 0.135), int(SCREEN_HEIGHT * 0.08)))
         self.settings_hover_rect = self.settings_img_hover.get_rect(center=self.settings_rect.center)
 
-    def draw(self, mouse_pos):
+    def draw(self, mouse_pos, no_banner=False, hide_buttons=False):
         self.screen.blit(self.background, (0, 0))
-        self.screen.blit(self.banner, self.banner_rect)
-        self.screen.blit(self.play_button_hover if self.play_button_rect.collidepoint(mouse_pos) else self.play_button, self.play_button_rect)
-        self.screen.blit(self.credits_img_hover if self.credits_rect.collidepoint(mouse_pos) else self.credits_img, self.credits_rect)
-        self.screen.blit(self.quit_img_hover if self.quit_rect.collidepoint(mouse_pos) else self.quit_img, self.quit_rect)
+        if not no_banner:
+            self.screen.blit(self.banner, self.banner_rect)
+        if not hide_buttons:
+            self.screen.blit(self.play_button_hover if self.play_button_rect.collidepoint(mouse_pos) else self.play_button, self.play_button_rect)
+            self.screen.blit(self.credits_img_hover if self.credits_rect.collidepoint(mouse_pos) else self.credits_img, self.credits_rect)
+            self.screen.blit(self.quit_img_hover if self.quit_rect.collidepoint(mouse_pos) else self.quit_img, self.quit_rect)
 
-        if self.settings_rect.collidepoint(mouse_pos):
-            self.screen.blit(self.settings_img_hover, self.settings_hover_rect)
-        else:
-            self.screen.blit(self.settings_img, self.settings_rect)
+            if self.settings_rect.collidepoint(mouse_pos):
+                self.screen.blit(self.settings_img_hover, self.settings_hover_rect)
+            else:
+                self.screen.blit(self.settings_img, self.settings_rect)
 
-        # Afficher le meilleur score à côté du bouton jouer
-        best_score_text = text_font.render(f"Meilleur Score: {self.best_score}", True, BLACK)
-        best_score_rect = best_score_text.get_rect()
-        best_score_rect.left = self.play_button_rect.right + 20
-        best_score_rect.centery = self.play_button_rect.centery
-        self.screen.blit(best_score_text, best_score_rect)
+            # Afficher le meilleur score à côté du bouton jouer
+            best_score_text = text_font.render(f"Meilleur Score: {self.best_score}", True, BLACK)
+            best_score_rect = best_score_text.get_rect()
+            best_score_rect.left = self.play_button_rect.right + 20
+            best_score_rect.centery = self.play_button_rect.centery
+            self.screen.blit(best_score_text, best_score_rect)
 
     def handle_click(self, pos):
         if self.play_button_rect.collidepoint(pos):

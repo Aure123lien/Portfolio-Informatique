@@ -20,6 +20,14 @@ class Game:
         except:
             self.best_score = 0
 
+        # Charger les niveaux complétés par le joueur
+        self.completed_levels_path = os.path.join(os.path.dirname(__file__), '..', 'completed_levels.txt')
+        try:
+            with open(self.completed_levels_path, 'r') as f:
+                self.completed_levels = int(f.read().strip())
+        except:
+            self.completed_levels = 0
+
         # Joueur
         self.player = Player(self)
         self.all_players = pygame.sprite.Group()
@@ -86,6 +94,11 @@ class Game:
             self.best_score = self.player.score
             with open(self.best_score_path, 'w') as f:
                 f.write(str(self.best_score))
+        # Mettre à jour les niveaux complétés si le score est positif (actuellement cette condition a voir plus tard)
+        if self.player.score > 0:
+            self.completed_levels = max(self.completed_levels, self.level)
+            with open(self.completed_levels_path, 'w') as f:
+                f.write(str(self.completed_levels))
         self.all_monsters.empty()
         self.comet_event.all_comets.empty()
         self.player.health = self.player.max_health

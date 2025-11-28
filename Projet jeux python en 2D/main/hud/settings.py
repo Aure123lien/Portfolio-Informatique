@@ -38,7 +38,8 @@ class SettingsMenu:
                     self.sound_volume = data.get('sound_volume', INITIAL_SOUND_VOLUME)
                     self.fullscreen_mode = data.get('fullscreen_mode', 0)
             except (json.JSONDecodeError, KeyError):
-                pass  # Utiliser les valeurs par défaut en cas d'erreur
+                pass  
+            # Utiliser les valeurs par défaut mis par le jeux en cas d'erreur
 
     def save_settings(self):
         data = {
@@ -50,7 +51,8 @@ class SettingsMenu:
             with open(self.settings_file, 'w') as f:
                 json.dump(data, f, indent=4)
         except IOError:
-            pass  # Ignorer les erreurs d'écriture
+            pass  
+        # Cela va ignorer les erreurs d'écriture
 
     def draw(self):
         overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)

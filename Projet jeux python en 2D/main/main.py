@@ -40,7 +40,7 @@ def set_screen_mode(mode):
     windowed_width = 1920
     windowed_height = 1080
 
-    if mode == 0:  # Fenêtre plein écran
+    if mode == 0:  # Fenêtré plein écran
         screen = pygame.display.set_mode((windowed_width, windowed_height), pygame.NOFRAME)
         SCREEN_WIDTH, SCREEN_HEIGHT = windowed_width, windowed_height
     elif mode == 1:  # Plein écran
@@ -88,7 +88,7 @@ game.sound_manager.set_volume(sound_volume)
 
 # Toutes les interface afficher
 main_menu = MainMenu(screen, game.best_score)
-level_menu = LevelMenu(screen)
+level_menu = LevelMenu(screen, game.completed_levels)
 settings_menu = SettingsMenu(screen)
 game_over_screen = GameOverScreen(screen)
 pause_menu = PauseMenu(screen)
@@ -124,7 +124,10 @@ while running:
     # Menu principal et de fin
     else:
         if show_level_menu:
-            level_menu.draw(mouse_pos)
+            main_menu.best_score = game.best_score
+            level_menu.completed_levels = game.completed_levels
+            main_menu.draw(mouse_pos, no_banner=True, hide_buttons=True)
+            level_menu.draw(mouse_pos, overlay=True)
         elif not game.is_game_over:
             main_menu.best_score = game.best_score
             main_menu.draw(mouse_pos)
@@ -199,7 +202,7 @@ while running:
                     sys.exit()
             # Gestion du menu de niveaux
             elif show_level_menu:
-                action = level_menu.handle_click(event.pos)
+                action = level_menu.handle_click(event.pos, overlay=True)
                 if action == "back":
                     show_level_menu = False
                     game.sound_manager.play("click")

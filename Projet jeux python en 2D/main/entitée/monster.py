@@ -79,7 +79,7 @@ class Dragon(Monster):
     def __init__(self, game, multiplier=1):
         size = (400, 400)
         super().__init__(game, "dragon", DRAGON_IMG_PATH, size, multiplier)
-        self.rect.y = SCREEN_HEIGHT - size[1] - 30
+        self.rect.y = 400  # Position haute pour être touchable uniquement en sautant
         self.health = DRAGON_HEALTH * multiplier
         self.max_health = DRAGON_HEALTH * multiplier
         self.attack = MONSTER_ATTACK_DRAGON * multiplier

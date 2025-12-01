@@ -32,11 +32,6 @@ class Projectile(pygame.sprite.Sprite):
            self.rect.x += self.velocity
            self.rotate()
 
-           # detection collision avec les monstres
-           for monster in self.player.game.check_collision(self, self.player.game.all_monsters):
-                self.remove()
-                monster.damage(self.player.attack)
-
            # retirer le projectile s'il sort de l'écran
            if self.rect.x > SCREEN_WIDTH:
                self.remove()

@@ -162,15 +162,15 @@ while running:
             pygame.quit()
             print("Le jeu se ferme")
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE and game.is_playing and not is_paused:
-                game.player.launch_projectile()
-            elif event.key == pygame.K_ESCAPE and game.is_playing:
+            if event.key == pygame.K_ESCAPE and game.is_playing:
                 is_paused = not is_paused
             game.pressed[event.key] = True
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mx, my = event.pos
+            if event.button == 1 and game.is_playing and not is_paused:
+                game.player.launch_projectile()
             if show_settings and settings_menu.music_slider_rect.collidepoint(event.pos):
                 settings_menu.dragging_music = True
             if show_settings and settings_menu.sound_slider_rect.collidepoint(event.pos):

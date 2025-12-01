@@ -143,10 +143,17 @@ class Game:
     # Mise à jour de la partie
     def update(self, screen):
         # Déplacements de mon joueur
-        if self.pressed.get(pygame.K_RIGHT) and self.player.rect.right < SCREEN_WIDTH:
+        if self.pressed.get(pygame.K_d) and self.player.rect.right < SCREEN_WIDTH:
             self.player.move_right()
-        elif self.pressed.get(pygame.K_LEFT) and self.player.rect.left > 0:
+        elif self.pressed.get(pygame.K_q) and self.player.rect.left > 0:
             self.player.move_left()
+
+        # Saut du joueur
+        if self.pressed.get(pygame.K_SPACE):
+            self.player.jump()
+
+        # Mise à jour de la physique du joueur
+        self.player.update()
 
         # Afficher le joueur et sa barre de vie
         screen.blit(self.player.image, self.player.rect)
@@ -159,6 +166,12 @@ class Game:
         for projectile in self.player.all_projectiles:
             projectile.move()
         self.player.all_projectiles.draw(screen)
+
+        # Détection de collision projectiles-monstres
+        projectile_hits = pygame.sprite.groupcollide(self.player.all_projectiles, self.all_monsters, True, False, collided=pygame.sprite.collide_mask)
+        for projectile, monsters in projectile_hits.items():
+            for monster in monsters:
+                monster.damage(self.player.attack)
 
         # Gérer les monstres
         for monster in self.all_monsters:

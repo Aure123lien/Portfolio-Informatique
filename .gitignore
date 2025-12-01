@@ -1,0 +1,18 @@
+# Ce fichier permet que quand je fais la sauvegarde sur mon guithub que tous les fichiers temporaire et qui seront supprimer ne se sauvegarde pas
+# Fichiers temporaires Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Fichiers compilés Java
+*.class
+
+# Logs et fichiers temporaires
+*.log
+*.tmp
+*.bak
+*~
+
+# Fichiers système
+.DS_Store
+Thumbs.db

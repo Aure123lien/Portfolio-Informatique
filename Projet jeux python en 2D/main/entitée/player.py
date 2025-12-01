@@ -26,6 +26,10 @@ class Player(pygame.sprite.Sprite):
         # Position initiale sur le sol de la carte
         self.rect.x = 350
         self.rect.y = SCREEN_HEIGHT - self.image.get_height() - 50
+        self.jump_velocity = 0
+        self.gravity = 0.8
+        self.on_ground = True
+        self.ground_y = self.rect.y
         self.load_stats()
 
     def damage(self, amount):
@@ -45,9 +49,10 @@ class Player(pygame.sprite.Sprite):
         surface.blit(text, text_rect)
 
     def launch_projectile(self):
-        # Créer un nouveau projectile et jouer le son
-        self.all_projectiles.add(Projectile(self))
-        self.game.sound_manager.play("tir")
+        # Créer un nouveau projectile et jouer le son seulement si limite non atteinte
+        if len(self.all_projectiles) < MAX_PROJECTILES:
+            self.all_projectiles.add(Projectile(self))
+            self.game.sound_manager.play("tir")
 
     def move_right(self):
         if not self.game.check_collision(self, self.game.all_monsters):
@@ -98,3 +103,16 @@ class Player(pygame.sprite.Sprite):
             f.write(f"{self.max_health}\n")
             f.write(f"{self.attack}\n")
             f.write(f"{self.velocity}\n")
+
+    def update(self):
+        self.rect.y += self.jump_velocity
+        self.jump_velocity += self.gravity
+        if self.rect.y >= self.ground_y:
+            self.rect.y = self.ground_y
+            self.jump_velocity = 0
+            self.on_ground = True
+
+    def jump(self):
+        if self.on_ground:
+            self.jump_velocity = -15
+            self.on_ground = False

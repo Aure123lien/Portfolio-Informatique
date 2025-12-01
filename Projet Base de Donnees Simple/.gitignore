@@ -1,0 +1,12 @@
+# Fichiers de base de données générés
+*.db
+*.sqlite
+*.sqlite3
+
+# Fichiers temporaires
+*.tmp
+*.log
+
+# Dossiers temporaires
+temp/
+cache/

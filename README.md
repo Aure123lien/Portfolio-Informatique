@@ -1,6 +1,6 @@
 # Portfolio-Informatique
 
-Ce dépôt contient mes exercices et projets pour les languages Java et Python, cela me permet de les réalisés dans le cadre de ma préparation pour intégrer le BUT Informatique
+Ce dépôt contient mes exercices et projets pour les languages Java et Python, cela me permet de les réalisés dans le cadre de ma préparation pour intégrer une formation dans l'Informatique
 
 # Objectif
 

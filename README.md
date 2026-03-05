@@ -4,7 +4,7 @@ Ce dépôt contient mes exercices et projets pour les languages Java et Python, 
 
 # Objectif
 
-Mon objectif est d'améliorer mes compétences en programmation et en algorithmie en apprenant à travailler avec deux langages : Java et Python. Grace aux exercice et projet que je réalise je me développe des bases solides tout en progressant avec des projets concrets et des exercices pratiques tous au long des jours en montrant ma progression au fil du temps (précision j'utilise l'application vs code pour effectuer tous mes codes tous au long)
+Mon objectif est d'améliorer mes compétences en programmation et en algorithmie en apprenant à travailler avec deux langages : Java et Python. Grace aux exercice et projet que je réalise je me développe des bases solides tout en progressant avec des projets concrets et des exercices pratiques tous au long des jours en montrant ma progression au fil du temps (précision j'utilise l'application vs code pour effectuer tous mes codes tous au long). J'ai également mis différentes description a l'intérieur du code
 
 # Contenu
 
@@ -47,4 +47,4 @@ Grace a ceci je me développe pour mieux comprendre comment fonctionne github ca
 
 ## Motivation
 
-Mon but est d’intégrer le BUT Informatique (Bordeaux), et je partage mes projets ici pour montrer mon sérieux et mon engagement envers la programmation. Chaque projet sur ce dépôt reflète mes progrès et ma volonté de me perfectionner. En travaillant sur des projets réels, je me prépare a pouvoir faire encore plus complexe tout en apprenant à faire du code de manière plus structurée en expliquant chaque ligne ce qu'elle va effectuer, Merci a vous de regarder mes travaux
+Mon but est d’intégrer une formation dans l'Informatique (Bordeaux), et je partage mes projets ici pour montrer mon sérieux et mon engagement envers la programmation. Chaque projet sur ce dépôt reflète mes progrès et ma volonté de me perfectionner. En travaillant sur des projets réels, je me prépare a pouvoir faire encore plus complexe tout en apprenant à faire du code de manière plus structurée en expliquant chaque ligne ce qu'elle va effectuer, Merci a vous de regarder mes travaux
